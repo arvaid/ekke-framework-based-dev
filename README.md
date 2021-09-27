@@ -1,3 +1,5 @@
+Árvai Dániel IXWYOW
+
 ## Backend
 
 Server side components of the web application are using Java and Spring Framework with MySQL and Hibernate.
