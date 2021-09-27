@@ -5,5 +5,5 @@ docker run \
  --env MYSQL_DATABASE=library \
  --name mysql \
  --publish 3306:3306 \
- -rm \
+ --rm \
  mysql:8
