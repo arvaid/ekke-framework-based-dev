@@ -40,11 +40,11 @@ public class ProductManagerImpl implements ProductManager {
             throw new ProductAlreadyExistsException();
         }
         ProductEntity productEntity = productRepository.save(
-          ProductEntity.builder()
-                  .id(product.getId())
-                  .name(product.getName())
-                  .price(product.getPrice())
-                  .build()
+                ProductEntity.builder()
+                        .id(product.getId())
+                        .name(product.getName())
+                        .price(product.getPrice())
+                        .build()
         );
         return convertProductEntity2Model(productEntity);
     }

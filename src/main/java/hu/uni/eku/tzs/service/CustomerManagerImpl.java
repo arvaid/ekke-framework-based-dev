@@ -2,9 +2,7 @@ package hu.uni.eku.tzs.service;
 
 import hu.uni.eku.tzs.dao.CustomerRepository;
 import hu.uni.eku.tzs.dao.entity.CustomerEntity;
-import hu.uni.eku.tzs.dao.entity.EmployeeEntity;
 import hu.uni.eku.tzs.model.Customer;
-import hu.uni.eku.tzs.model.Employee;
 import hu.uni.eku.tzs.service.exceptions.CustomerAlreadyExistsException;
 import hu.uni.eku.tzs.service.exceptions.CustomerNotFoundException;
 import lombok.RequiredArgsConstructor;

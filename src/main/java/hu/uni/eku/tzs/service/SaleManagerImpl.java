@@ -107,13 +107,13 @@ public class SaleManagerImpl implements SaleManager {
         ProductEntity productEntity = convertProductModel2Entity(sale.getProduct());
 
         SaleEntity saleEntity = saleRepository.save(
-          SaleEntity.builder()
-                  .id(sale.getId())
-                  .salesPerson(employeeEntity)
-                  .customer(customerEntity)
-                  .product(productEntity)
-                  .quantity(sale.getQuantity())
-                  .build()
+                SaleEntity.builder()
+                        .id(sale.getId())
+                        .salesPerson(employeeEntity)
+                        .customer(customerEntity)
+                        .product(productEntity)
+                        .quantity(sale.getQuantity())
+                        .build()
         );
         return convertSaleEntity2Model(saleEntity);
     }
