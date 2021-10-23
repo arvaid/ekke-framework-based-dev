@@ -1,16 +1,12 @@
 package hu.uni.eku.tzs.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Data
-@RequiredArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Employee {
     private int id;
 
