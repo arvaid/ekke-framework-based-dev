@@ -11,7 +11,7 @@ import javax.validation.Valid;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SalesDto {
+public class SaleDto {
 
     private int id;
 
