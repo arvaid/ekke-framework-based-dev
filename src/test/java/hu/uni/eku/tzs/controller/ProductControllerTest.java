@@ -87,11 +87,11 @@ class ProductControllerTest {
     @Test
     void deleteFromQueryParamWhenProductNotFound() throws ProductNotFoundException {
         // given
-        final int notFoundSaleId = TestDataProvider.unknownId;
-        doThrow(new ProductNotFoundException(String.format("Cannot find sale with ID %d", notFoundSaleId)))
-                .when(productManager).readById(notFoundSaleId);
+        final int notFoundProductId = TestDataProvider.unknownId;
+        doThrow(new ProductNotFoundException(String.format("Cannot find product with ID %d", notFoundProductId)))
+                .when(productManager).readById(notFoundProductId);
         // when then
-        assertThatThrownBy(() -> controller.delete(notFoundSaleId))
+        assertThatThrownBy(() -> controller.delete(notFoundProductId))
                 .isInstanceOf(ResponseStatusException.class);
     }
 
