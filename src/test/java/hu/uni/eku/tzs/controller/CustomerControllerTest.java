@@ -6,7 +6,6 @@ import hu.uni.eku.tzs.model.Customer;
 import hu.uni.eku.tzs.service.CustomerManager;
 import hu.uni.eku.tzs.service.exceptions.CustomerAlreadyExistsException;
 import hu.uni.eku.tzs.service.exceptions.CustomerNotFoundException;
-import hu.uni.eku.tzs.service.exceptions.SaleNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -88,11 +87,11 @@ class CustomerControllerTest {
     @Test
     void deleteFromQueryParamWhenCustomerNotFound() throws CustomerNotFoundException {
         // given
-        final int notFoundSaleId = TestDataProvider.unknownId;
-        doThrow(new CustomerNotFoundException(String.format("Cannot find sale with ID %d", notFoundSaleId)))
-                .when(customerManager).readById(notFoundSaleId);
+        final int notFoundCustomerId = TestDataProvider.unknownId;
+        doThrow(new CustomerNotFoundException(String.format("Cannot find employee with ID %d", notFoundCustomerId)))
+                .when(customerManager).readById(notFoundCustomerId);
         // when then
-        assertThatThrownBy(() -> controller.delete(notFoundSaleId))
+        assertThatThrownBy(() -> controller.delete(notFoundCustomerId))
                 .isInstanceOf(ResponseStatusException.class);
     }
 
