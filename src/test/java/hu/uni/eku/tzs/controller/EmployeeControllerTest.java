@@ -85,11 +85,11 @@ class EmployeeControllerTest {
     @Test
     void deleteFromQueryParamWhenEmployeeNotFound() throws EmployeeNotFoundException {
         // given
-        final int notFoundSaleId = TestDataProvider.unknownId;
-        doThrow(new EmployeeNotFoundException(String.format("Cannot find sale with ID %d", notFoundSaleId)))
-                .when(employeeManager).readById(notFoundSaleId);
+        final int notFoundEmployeeId = TestDataProvider.unknownId;
+        doThrow(new EmployeeNotFoundException(String.format("Cannot find employee with ID %d", notFoundEmployeeId)))
+                .when(employeeManager).readById(notFoundEmployeeId);
         // when then
-        assertThatThrownBy(() -> controller.delete(notFoundSaleId))
+        assertThatThrownBy(() -> controller.delete(notFoundEmployeeId))
                 .isInstanceOf(ResponseStatusException.class);
     }
 
