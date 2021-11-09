@@ -6,7 +6,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: library
+      MYSQL_DATABASE: sales
     volumes:
       - './src/main/resources/sql/create_database.sql:/docker-entrypoint-initdb.d/create_database.sql'
     ports:
@@ -20,7 +20,7 @@ services:
     environment:
       DB_HOST: db
       DB_PORT: 3306
-      DB_NAME: library
+      DB_NAME: sales
       DB_USER: root
       DB_PASSWORD: password
     depends_on:
