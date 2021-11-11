@@ -19,6 +19,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,6 +30,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -100,12 +104,12 @@ class SaleManagerImplTest {
                 TestDataProvider.getSale1Entity(),
                 TestDataProvider.getSale2Entity()
         );
-
+        Page<SaleEntity> page = new PageImpl<>(saleEntities);
         Collection<Sale> expectedSales = List.of(
                 TestDataProvider.getSale1(),
                 TestDataProvider.getSale2()
         );
-        when(saleRepository.findAll()).thenReturn(saleEntities);
+        when(saleRepository.findAll(isA(Pageable.class))).thenReturn(page);
         // when
         Collection<Sale> actualSales = service.readAll();
         // then

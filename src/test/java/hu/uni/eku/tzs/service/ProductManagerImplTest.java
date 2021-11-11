@@ -10,6 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -84,12 +88,12 @@ class ProductManagerImplTest {
                 TestDataProvider.getHoverboardEntity(),
                 TestDataProvider.getPortalGunEntity()
         );
-
+        Page<ProductEntity> page = new PageImpl<>(productEntities);
         Collection<Product> expectedProducts = List.of(
                 TestDataProvider.getHoverboard(),
                 TestDataProvider.getPortalGun()
         );
-        when(productRepository.findAll()).thenReturn(productEntities);
+        when(productRepository.findAll(isA(Pageable.class))).thenReturn(page);
         // when
         Collection<Product> actualProducts = service.readAll();
         // then

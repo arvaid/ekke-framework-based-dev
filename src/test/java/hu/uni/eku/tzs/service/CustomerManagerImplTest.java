@@ -10,6 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -85,12 +89,12 @@ class CustomerManagerImplTest {
                 TestDataProvider.getJohnDoeEntity(),
                 TestDataProvider.getJaneDoeEntity()
         );
-
+        Page<CustomerEntity> page = new PageImpl<>(customerEntities);
         Collection<Customer> expectedCustomers = List.of(
                 TestDataProvider.getJohnDoe(),
                 TestDataProvider.getJaneDoe()
         );
-        when(customerRepository.findAll()).thenReturn(customerEntities);
+        when(customerRepository.findAll(isA(Pageable.class))).thenReturn(page);
         // when
         Collection<Customer> actualCustomers = service.readAll();
         // then
