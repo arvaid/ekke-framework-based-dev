@@ -6,6 +6,7 @@ import hu.uni.eku.tzs.model.Customer;
 import hu.uni.eku.tzs.service.exceptions.CustomerAlreadyExistsException;
 import hu.uni.eku.tzs.service.exceptions.CustomerNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -63,7 +64,10 @@ public class CustomerManagerImpl implements CustomerManager {
 
     @Override
     public Collection<Customer> readAll() {
-        return customerRepository.findAll().stream().map(CustomerManagerImpl::convertCustomerEntity2Model)
+        return customerRepository.findAll(PageRequest.of(0, 100))
+                .getContent()
+                .stream()
+                .map(CustomerManagerImpl::convertCustomerEntity2Model)
                 .collect(Collectors.toList());
     }
 

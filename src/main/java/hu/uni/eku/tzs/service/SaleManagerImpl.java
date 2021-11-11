@@ -12,6 +12,7 @@ import hu.uni.eku.tzs.model.Sale;
 import hu.uni.eku.tzs.service.exceptions.SaleAlreadyExistsException;
 import hu.uni.eku.tzs.service.exceptions.SaleNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -129,7 +130,10 @@ public class SaleManagerImpl implements SaleManager {
 
     @Override
     public Collection<Sale> readAll() {
-        return saleRepository.findAll().stream().map(SaleManagerImpl::convertSaleEntity2Model)
+        return saleRepository.findAll(PageRequest.of(0, 100))
+                .getContent()
+                .stream()
+                .map(SaleManagerImpl::convertSaleEntity2Model)
                 .collect(Collectors.toList());
     }
 

@@ -6,6 +6,7 @@ import hu.uni.eku.tzs.model.Employee;
 import hu.uni.eku.tzs.service.exceptions.EmployeeAlreadyExistsException;
 import hu.uni.eku.tzs.service.exceptions.EmployeeNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -63,7 +64,10 @@ public class EmployeeManagerImpl implements EmployeeManager {
 
     @Override
     public Collection<Employee> readAll() {
-        return employeeRepository.findAll().stream().map(EmployeeManagerImpl::convertEmployeeEntity2Model)
+        return employeeRepository.findAll(PageRequest.of(0, 100))
+                .getContent()
+                .stream()
+                .map(EmployeeManagerImpl::convertEmployeeEntity2Model)
                 .collect(Collectors.toList());
     }
 
