@@ -1,5 +1,8 @@
 package hu.uni.eku.tzs.service;
 
+import hu.uni.eku.tzs.dao.CustomerRepository;
+import hu.uni.eku.tzs.dao.EmployeeRepository;
+import hu.uni.eku.tzs.dao.ProductRepository;
 import hu.uni.eku.tzs.dao.SaleRepository;
 import hu.uni.eku.tzs.dao.entity.CustomerEntity;
 import hu.uni.eku.tzs.dao.entity.EmployeeEntity;
@@ -24,6 +27,12 @@ import java.util.stream.Collectors;
 public class SaleManagerImpl implements SaleManager {
 
     private final SaleRepository saleRepository;
+
+    private final EmployeeRepository employeeRepository;
+
+    private final CustomerRepository customerRepository;
+
+    private final ProductRepository productRepository;
 
     private static SaleEntity convertSaleModel2Entity(Sale sale) {
         return SaleEntity.builder()
@@ -103,9 +112,9 @@ public class SaleManagerImpl implements SaleManager {
             throw new SaleAlreadyExistsException();
         }
 
-        EmployeeEntity employeeEntity = convertEmployeeModel2Entity(sale.getSalesPerson());
-        CustomerEntity customerEntity = convertCustomerModel2Entity(sale.getCustomer());
-        ProductEntity productEntity = convertProductModel2Entity(sale.getProduct());
+        EmployeeEntity employeeEntity = this.readOrRecordSalesPerson(sale.getSalesPerson());
+        CustomerEntity customerEntity = this.readOrRecordCustomer(sale.getCustomer());
+        ProductEntity productEntity = this.readOrRecordProduct(sale.getProduct());
 
         SaleEntity saleEntity = saleRepository.save(
                 SaleEntity.builder()
@@ -147,4 +156,44 @@ public class SaleManagerImpl implements SaleManager {
     public void delete(Sale sale) {
         saleRepository.delete(convertSaleModel2Entity(sale));
     }
+
+    private ProductEntity readOrRecordProduct(Product product) {
+        if (productRepository.findById(product.getId()).isPresent()) {
+            return productRepository.findById(product.getId()).get();
+        }
+        return productRepository.save(
+                ProductEntity.builder()
+                        .id(product.getId())
+                        .name(product.getName())
+                        .price(product.getPrice())
+                        .build()
+        );
+    }
+
+    private EmployeeEntity readOrRecordSalesPerson(Employee employee) {
+        if (employeeRepository.findById(employee.getId()).isPresent()) {
+            return employeeRepository.findById(employee.getId()).get();
+        }
+        return employeeRepository.save(
+                EmployeeEntity.builder()
+                        .id(employee.getId())
+                        .firstName(employee.getFirstName())
+                        .middleInitial(employee.getMiddleInitial())
+                        .lastName(employee.getLastName())
+                        .build()
+        );
+    }
+
+    private CustomerEntity readOrRecordCustomer(Customer customer) {
+        if (customerRepository.findById(customer.getId()).isPresent()) {
+            return customerRepository.findById(customer.getId()).get();
+        }
+        return CustomerEntity.builder()
+                .id(customer.getId())
+                .firstName(customer.getFirstName())
+                .middleInitial(customer.getMiddleInitial())
+                .lastName(customer.getLastName())
+                .build();
+    }
+
 }
