@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 @Data
 @Builder
@@ -24,6 +25,7 @@ public class SaleDto {
     @Valid
     private ProductDto product;
 
+    @Min(value = 0, message = "the quantity must be positive")
     private double quantity;
 
 }
