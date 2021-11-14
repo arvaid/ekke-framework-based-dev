@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,6 +54,14 @@ public class CustomerController {
         } catch (CustomerAlreadyExistsException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
+    }
+
+    @ApiOperation("Update")
+    @PutMapping(value = {"", "/"})
+    public CustomerDto update(@Valid @RequestBody CustomerDto updateRequestDto) {
+        Customer customer = customerMapper.customerDto2customer(updateRequestDto);
+        Customer updatedCustomer = customerManager.modify(customer);
+        return customerMapper.customer2customerDto(updatedCustomer);
     }
 
     @ApiOperation("Delete")

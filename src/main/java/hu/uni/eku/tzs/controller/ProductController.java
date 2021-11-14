@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,6 +54,14 @@ public class ProductController {
         } catch (ProductAlreadyExistsException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
+    }
+
+    @ApiOperation("Update")
+    @PutMapping(value = {"", "/"})
+    public ProductDto update(@Valid @RequestBody ProductDto updateRequestDto) {
+        Product product = productMapper.productDto2product(updateRequestDto);
+        Product updatedProduct = productManager.modify(product);
+        return productMapper.product2productDto(updatedProduct);
     }
 
     @ApiOperation("Delete")
