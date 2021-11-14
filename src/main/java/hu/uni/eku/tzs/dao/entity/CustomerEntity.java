@@ -25,7 +25,7 @@ public class CustomerEntity {
     @Column(name = "FirstName")
     private String firstName;
 
-    @Column(name = "MiddleInitial")
+    @Column(name = "MiddleInitial", length = 1)
     private String middleInitial;
 
     @Column(name = "LastName")
