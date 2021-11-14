@@ -21,7 +21,7 @@ import javax.persistence.ManyToOne;
 public class SaleEntity {
     @Id
     @Column(name = "SalesID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne

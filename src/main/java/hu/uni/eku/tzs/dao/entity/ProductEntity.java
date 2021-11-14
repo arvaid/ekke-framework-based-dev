@@ -19,7 +19,7 @@ import javax.persistence.Id;
 public class ProductEntity {
     @Id
     @Column(name = "ProductID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "Name")
