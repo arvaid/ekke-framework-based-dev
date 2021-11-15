@@ -8,7 +8,8 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: sales
     volumes:
-      - './src/main/resources/sql/create_database.sql:/docker-entrypoint-initdb.d/create_database.sql'
+      - './src/main/resources/use_gzipped_mysql_dump.sh:/docker-entrypoint-initdb.d/use_gzipped_mysql_dump.sh'
+      - './src/main/resources/sql/create_database.sql.gz:/create_database.sql.gz'
     ports:
       - '127.0.0.1:3306:3306'
   backend:

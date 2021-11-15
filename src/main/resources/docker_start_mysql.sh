@@ -6,5 +6,6 @@ docker run \
      -e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASS \
      --rm -d \
      -p 3306:3306 \
-     -v $(pwd)/sql/create_database.sql:/docker-entrypoint-initdb.d/create_database.sql \
+     -v $(pwd)/sql/create_database.sql.gz:/create_database.sql.gz \
+     -v $(pwd)/use_gzipped_mysql_dump.sh:/docker-entrypoint-initdb.d/use_gzipped_mysql_dump.sh \
      mysql:8
